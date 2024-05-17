@@ -61,22 +61,19 @@ runs:
 
             echo "##### Cloning destination Github repository #####"
             # Setup git
-            if ! test 'git config user.email'; then 
-              git config --global user.email "${{ inputs.email }}"
-            fi
-            if ! test 'git config user.name'; then 
-              git config --global user.name "${{ inputs.name }}"
-            fi
+            #if ! test 'git config user.email'; then 
+            git config --global user.email "${{ inputs.email }}"
+            # fi
+            #if ! test 'git config user.name'; then 
+            git config --global user.name "${{ inputs.name }}"
+            #fi
 
             echo "???"
             echo `git config user.email`
             echo `git config user.name`
             echo "???"
 
-            echo "DEBUG FOO"
-            FOO=`git config -l | grep 'http\..*\.extraheader'`
-            echo "$FOO"
-            if test "$FOO"; then
+            if test  echo `git config -l | grep 'http\..*\.extraheader'`; then
               echo "removing headers"
               git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             fi 
