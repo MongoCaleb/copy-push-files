@@ -69,11 +69,11 @@ runs:
             fi
 
             echo "???"
-            echo 'git config user.email'
-            echo 'git config user.name'
+            echo `git config user.email`
+            echo `git config user.name`
             echo "???"
 
-            echo "DEBUG"
+            echo "DEBUG FOO"
             FOO=`git config -l | grep 'http\..*\.extraheader'`
             echo "$FOO"
             if test "$FOO"; then
