@@ -61,22 +61,17 @@ runs:
 
             echo "##### Cloning destination Github repository #####"
             # Setup git
-            #if ! test 'git config user.email'; then 
             git config --global user.email "${{ inputs.email }}"
-            # fi
-            #if ! test 'git config user.name'; then 
             git config --global user.name "${{ inputs.name }}"
-            #fi
 
-            echo "???"
-            echo `git config user.email`
-            echo `git config user.name`
-            echo "???"
+            # The following check is needed if you have multiple copies within 
+            # a single workflow.
 
             if test  echo `git config -l | grep 'http\..*\.extraheader'`; then
               echo "removing headers"
               git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             fi 
+            
             git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
             echo
