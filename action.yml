@@ -67,8 +67,9 @@ runs:
             if ! test 'git config user.name'; then 
               git config --global user.name "${{ inputs.name }}"
             fi
-            # WHAT FRESH HELL IS THIS?
-            if test 'git config -l | grep 'http\..*\.extraheader''; then
+            FOO=`git config -l | grep 'http\..*\.extraheader'`
+            echo "$FOO"
+            if test `git config -l | grep 'http\..*\.extraheader'`; then
               git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             fi 
             git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
