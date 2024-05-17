@@ -38,7 +38,8 @@ runs:
   steps:
     - name: Copy contents from current repository to destination Github repository
       run: |
-
+        echo "source: ${{ inputs.source_files }}"
+        echo "destination: ${{ inputs.remote_repository }}/${{ inputs.target_dir }} (${{ inputs.target_branch }})"
         if [ -z "${{ inputs.access_token }}" ]; then
           echo "WARNING: The access_token input is mandatory to push files to another repository."
           exit 1
@@ -60,8 +61,8 @@ runs:
 
             echo "##### Cloning destination Github repository #####"
             # Setup git
-            git config --global user.email "${{ inputs.email }}"
-            git config --global user.name "${{ inputs.name }}"
+            # git config --global user.email "${{ inputs.email }}"
+            # git config --global user.name "${{ inputs.name }}"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
