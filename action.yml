@@ -67,6 +67,7 @@ runs:
             if ! test 'git config user.name'; then 
               git config --global user.name "${{ inputs.name }}"
             fi
+            echo "DEBUG"
             FOO=`git config -l | grep 'http\..*\.extraheader'`
             echo "$FOO"
             if test `git config -l | grep 'http\..*\.extraheader'`; then
